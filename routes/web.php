@@ -22,4 +22,12 @@ require __DIR__.'/auth.php';
 
 Route::get('/main', function () {
     return view('main');
-})->name('main');
+})->name('post.index');
+
+Route::get('/blog', function () {
+    return view('blog');
+})->name('my_blog');
+
+Route::get('/blog', function () {
+    return view('blog');
+})->name('my_blog');
