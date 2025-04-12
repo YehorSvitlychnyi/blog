@@ -28,6 +28,3 @@ Route::get('/blog', function () {
     return view('blog');
 })->name('my_blog');
 
-Route::get('/blog', function () {
-    return view('blog');
-})->name('my_blog');
