@@ -19,7 +19,11 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('post.create', [
+            'multioptions' => [
+
+            ]
+        ]);
     }
 
     /**
@@ -27,7 +31,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //validation +get link+ insert into db
     }
 
     /**
