@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreFormRequest;
+use App\Models\Category;
+use App\Models\Post;
+use App\Models\Posts_Categories;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -20,18 +25,37 @@ class PostController extends Controller
     public function create()
     {
         return view('post.create', [
-            'multioptions' => [
-
-            ]
+            'categories' => Category::all(),
         ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreFormRequest $request)
     {
-        //validation +get link+ insert into db
+        $data = $request->validated();
+        $image = $data['file'];
+        $imageName = time() . '.' . $image->getClientOriginalExtension();
+        $imagePath = $image->StoreAs('/images', $imageName);
+        $post = new Post();
+        $post->name = $data['title'];
+        $post->author_id = Auth::id();
+        $post->short_description = $data['short_description'];
+        $post->description = $data['description'];
+        $post->img_link = $imagePath;
+        if(!isset($data['comments'])){
+            $post->comment_enabled = 0;
+        }
+        $post->save();
+        $categories = $data['categories'];
+        foreach($categories as $category){
+            $postCategory = new Posts_Categories();
+            $postCategory->post_id = $post->id;
+            $postCategory->category_id = $category;
+            $postCategory->save();
+        }
+        return redirect()->route('my_blog');
     }
 
     /**
