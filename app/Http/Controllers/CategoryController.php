@@ -32,7 +32,7 @@ class CategoryController extends Controller
      */
     public function store(CategoryRequest $request )
     {
-        $categories = DB::select('select * from categories');
+        $categories = Category::all();
         $data = $request->validated();
         $category = new Category();
         $category->name = $data['category'];
