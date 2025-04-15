@@ -8,7 +8,6 @@
     </div>
     <div>
         <label for="parent_category">Categories</label>
-        <!-- todo single category -->
         <select id="parent_category" name="parent_category">
             <option value="{{null}}"></option>
             @foreach($categories as $category)

@@ -32,7 +32,6 @@ class CategoryController extends Controller
      */
     public function store(CategoryRequest $request )
     {
-        //todo validate, get id from category name
         $categories = DB::select('select * from categories');
         $data = $request->validated();
         $category = new Category();
