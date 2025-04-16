@@ -35,8 +35,24 @@ class CategoryController extends Controller
         $categories = Category::all();
         $data = $request->validated();
         $category = new Category();
-        $category->name = $data['category'];
         $category->parent_id = $data['parent_category'];
+//        dump($data['parent_category']);
+        $prefix = '';
+//        if($data['parent_category'] !== null){
+//            $parent_id = $data['parent_category'];
+//            while($parent_id !== null){
+//                $prefix = $prefix . '-';
+//                foreach($categories as $category){
+//                    $id = &$parent_id;
+//                    if($category->id == $id){
+//                        $id = $category->parent_id;
+//                        dump($category->parent_id);
+//                    }
+//                }
+//            }
+//        }
+        $category->name = $prefix . $data['category'];
+//        dd($category->parent_id, $data['parent_category'], $category->name, $data['category']);
         $category->save();
         return redirect()->route('post.index');
     }
