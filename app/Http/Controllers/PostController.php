@@ -16,8 +16,10 @@ class PostController extends Controller
      */
     public function index()
     {
-        return view('main');
+        $posts = Post::latest()->paginate(6);
+        return view('main', compact('posts'));
     }
+
 
     /**
      * Show the form for creating a new resource.

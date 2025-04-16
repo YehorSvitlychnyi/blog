@@ -14,6 +14,14 @@ class Post extends Model
         'short_description',
         'description',
         'comment_enabled',
-        'password',
+        'likes',
+        'dislikes',
+        'rating'
     ];
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class, 'posts_categories');
+    }
+
 }
