@@ -32,3 +32,5 @@ Route::get('/post/create', [PostController::class, 'create'])->name('post.create
 Route::post('/post', [PostController::class, 'store'])->name('post.store');
 Route::get('/category/create',[\App\Http\Controllers\CategoryController::class,'create'])->name('category.create');
 Route::post('/category',[\App\Http\Controllers\CategoryController::class,'store'])->name('category.store');
+
+Route::get('/post/{post}',[PostController::class,'show'])->name('post.show');

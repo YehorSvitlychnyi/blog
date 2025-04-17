@@ -6,6 +6,7 @@ use App\Http\Requests\StoreFormRequest;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\Posts_Categories;
+use App\Models\Rating;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,8 +17,10 @@ class PostController extends Controller
      */
     public function index()
     {
-        return view('main');
+        $posts = Post::latest()->paginate(6);
+        return view('main', compact('posts'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -37,7 +40,7 @@ class PostController extends Controller
         $data = $request->validated();
         $image = $data['file'];
         $imageName = time() . '.' . $image->getClientOriginalExtension();
-        $imagePath = $image->StoreAs('/images', $imageName);
+        $imagePath = $image->StoreAs('/images', $imageName ,'public');
         $post = new Post();
         $post->name = $data['title'];
         $post->author_id = Auth::id();
@@ -61,9 +64,17 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Post $post)
     {
-        //
+        $rating = new Rating();
+        $likes = $rating->getLikes($post->id);
+        $dislikes = $rating->getDislikes($post->id);
+        return view('post.show',
+            [
+                'post' => $post,
+                'likes' => $likes,
+                'dislikes' => $dislikes,
+            ]);
     }
 
     /**
