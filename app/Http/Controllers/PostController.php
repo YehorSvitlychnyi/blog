@@ -39,7 +39,7 @@ class PostController extends Controller
         $data = $request->validated();
         $image = $data['file'];
         $imageName = time() . '.' . $image->getClientOriginalExtension();
-        $imagePath = $image->StoreAs('/images', $imageName);
+        $imagePath = $image->StoreAs('/images', $imageName ,'public');
         $post = new Post();
         $post->name = $data['title'];
         $post->author_id = Auth::id();
@@ -63,9 +63,9 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Post $post)
     {
-        //
+        dump($post);
     }
 
     /**
