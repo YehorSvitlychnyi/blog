@@ -34,26 +34,23 @@ class CategoryController extends Controller
     {
         $categories = Category::all();
         $data = $request->validated();
-        $category = new Category();
-        $category->parent_id = $data['parent_category'];
-//        dump($data['parent_category']);
+        $categoryInserted = new Category();
         $prefix = '';
-//        if($data['parent_category'] !== null){
-//            $parent_id = $data['parent_category'];
-//            while($parent_id !== null){
-//                $prefix = $prefix . '-';
-//                foreach($categories as $category){
-//                    $id = &$parent_id;
-//                    if($category->id == $id){
-//                        $id = $category->parent_id;
-//                        dump($category->parent_id);
-//                    }
-//                }
-//            }
-//        }
-        $category->name = $prefix . $data['category'];
-//        dd($category->parent_id, $data['parent_category'], $category->name, $data['category']);
-        $category->save();
+        if($data['parent_category'] !== null){
+            $parent_id = $data['parent_category'];
+            while($parent_id !== null){
+                $prefix .= '-';
+                foreach($categories as $category){
+                    if($category->id == $parent_id){
+                        $parent_id = $category->parent_id;
+                        break;
+                    }
+                }
+            }
+        }
+        $categoryInserted->name = $prefix . $data['category'];
+        $categoryInserted->parent_id = $data['parent_category'];
+        $categoryInserted->save();
         return redirect()->route('post.index');
     }
 
