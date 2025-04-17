@@ -1,3 +1,39 @@
 <x-app-layout>
-
+    <div class="container mx-auto px-4 py-8">
+        <div>
+            @forelse ($posts as $post)
+                <div>
+                    @if($post->img_link)
+                        <img src="{{ asset('storage/' . $post->img_link) }}"
+                             alt="">
+                    @endif
+                    <h2><a href="{{ route('post.show', $post->id) }}" >
+                            {{ $post->name }}
+                        </a>
+                    </h2>
+                    <p>{{ $post->short_description }}</p>
+                    <p>
+                        <strong>Categories:</strong>
+                        @foreach($post->categories as $category)
+                            {{ $loop->first ? '' : ',' }} {{ $category->name }}
+                        @endforeach
+                    </p>
+                    <div >
+                        {{-- Лайк --}}
+                        <i class="fa-solid fa-thumbs-up"></i>
+                        <i class="fa-solid fa-thumbs-down"></i>
+                    </div>
+                    <a href="{{ route('post.show', $post->id) }}">
+                        Go to article
+                    </a>
+                </div>
+            @empty
+                <p >No posts available.</p>
+            @endforelse
+        </div>
+        {{-- Пагінація --}}
+        <div class="mt-6">
+            {{ $posts->links() }}
+        </div>
+    </div>
 </x-app-layout>
