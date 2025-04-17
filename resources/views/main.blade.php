@@ -15,7 +15,7 @@
                     <p>
                         <strong>Categories:</strong>
                         @foreach($post->categories as $category)
-                            {{ $loop->first ? '' : ',' }} {{ $category->name }}
+                            {{ $loop->first ? '' : ',' }} {{ ltrim($category->name, '-') }}
                         @endforeach
                     </p>
                     <div >
