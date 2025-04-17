@@ -16,4 +16,9 @@ class Post extends Model
         'comment_enabled',
         'password',
     ];
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class, 'posts_categories');
+    }
+
 }

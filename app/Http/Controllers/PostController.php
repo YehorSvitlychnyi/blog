@@ -6,7 +6,6 @@ use App\Http\Requests\StoreFormRequest;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\Posts_Categories;
-use App\Models\Rating;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -66,15 +65,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        $rating = new Rating();
-        $likes = $rating->getLikes($post->id);
-        $dislikes = $rating->getDislikes($post->id);
-        return view('post.show',
-            [
-                'post' => $post,
-                'likes' => $likes,
-                'dislikes' => $dislikes,
-            ]);
+        dump($post);
     }
 
     /**
