@@ -47,20 +47,56 @@ class PostController extends Controller
         $post->short_description = $data['short_description'];
         $post->description = $data['description'];
         $post->img_link = $imagePath;
-        if(!isset($data['comments'])){
+        if (!isset($data['comments'])) {
             $post->comment_enabled = 0;
         }
         $post->save();
-        $categories = $data['categories'];
-        foreach($categories as $category){
-            $postCategory = new Posts_Categories();
-            $postCategory->post_id = $post->id;
-            $postCategory->category_id = $category;
-            $postCategory->save();
-        }
+        $this->savePostsCategories($data['categories'], $post->id);
         return redirect()->route('my_blog');
     }
-
+    public function savePostsCategories($categories, $postId) : void
+    {
+        $bigArray = [];
+        foreach ($categories as $category) {
+            $id = $category;
+            $ctgs = Category::all();
+            $parent_id = null;
+            foreach ($ctgs as $ctg){
+                if($ctg->id == $id){
+                    $parent_id = $ctg->parent_id;
+                }
+            }
+            if ($parent_id === null) {
+                $bigArray[] = $category;
+            } else {
+                $array = $this->getCategoriesId($parent_id);
+                $array[] = $category;
+                $bigArray = array_merge($bigArray, $array);
+            }
+        }
+        $bigArray = array_unique($bigArray,SORT_REGULAR);
+        foreach ($bigArray as $value){
+            $postCategory = new Posts_Categories();
+            $postCategory->post_id = $postId;
+            $postCategory->category_id = $value;
+            $postCategory->save();
+        }
+    }
+    public function getCategoriesId($parent_id) : array
+    {
+        $categories = Category::all();
+        $parent_categories = [];
+        while($parent_id !== null){
+            foreach($categories as $category){
+                if($category->id == $parent_id){
+                    $parent_id = $category->parent_id;
+                    array_unshift($parent_categories, $category->id);
+                    break;
+                }
+            }
+        }
+        return $parent_categories;
+    }
     /**
      * Display the specified resource.
      */

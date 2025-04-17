@@ -23,11 +23,10 @@ class StoreFormRequest extends FormRequest
     {
         return [
             'title' => 'required|string|min:5|max:100',
-            'short_description' => 'required|string|min:20|max:100',
+            'short_description' => 'required|string|min:10|max:200',
             'description' => 'required|string|min:20|max:700',
             'file' => 'required|image|max:2048',
             'categories' => 'required',
-
         ];
     }
 }
