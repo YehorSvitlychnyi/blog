@@ -14,7 +14,6 @@ class Post extends Model
         'short_description',
         'description',
         'comment_enabled',
-        'password',
     ];
     public function categories()
     {
