@@ -9,12 +9,12 @@ class Rating extends Model
     protected $table = 'ratings';
 
 
-    public function getLikes(string $postId)
+    public static function getLikes(string $postId)
     {
-        return $this->all()->where('post_id','=', $postId)->where('liked', '=', '1')->count();
+        return self::all()->where('post_id','=', $postId)->where('liked', '=', '1')->count();
     }
-    public function getDislikes(string $postId)
+    public static function getDislikes(string $postId)
     {
-        return $this->all()->where('post_id','=', $postId)->where('liked', '=', '0')->count();
+        return self::all()->where('post_id','=', $postId)->where('liked', '=', '0')->count();
     }
 }

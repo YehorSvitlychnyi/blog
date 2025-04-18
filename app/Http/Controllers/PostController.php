@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreFormRequest;
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\Posts_Categories;
 use App\Models\Rating;
@@ -103,14 +104,15 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        $rating = new Rating();
-        $likes = $rating->getLikes($post->id);
-        $dislikes = $rating->getDislikes($post->id);
+        $likes = Rating::getLikes($post->id);
+        $dislikes = Rating::getDislikes($post->id);
+        $comments = Comment::all()->where('post_id', '=', $post->id);
         return view('post.show',
             [
                 'post' => $post,
                 'likes' => $likes,
                 'dislikes' => $dislikes,
+                'comments' => $comments,
             ]);
     }
     public function myBlog()

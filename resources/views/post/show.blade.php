@@ -13,5 +13,22 @@
         <span>{{ $likes }}</span>
         <i class="fa-regular fa-thumbs-down"></i>
         <span>{{ $dislikes }}</span>
+        <div>
+            <form action="{{ route('comment.store', $post->id) }}" method="post">
+                @csrf
+                <label for="comment"></label>
+                <input type="text" id="comment" name="comment">
+                <input type="submit">
+            </form>
+            @forelse($comments as $comment)
+                <div>
+                    <p>{{ $comment->user_id }}</p>
+                    <p>{{ $comment->name }}</p>
+                    <p>{{ $comment->updated_at }}</p>
+                </div>
+            @empty
+                    <p>No comments</p>
+            @endforelse
+        </div>
     </div>
 </x-app-layout>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
@@ -37,3 +38,5 @@ Route::get('/post/{post}',[PostController::class,'show'])->name('post.show');
 Route::get('/blog', [PostController::class, 'myBlog'])->middleware('auth')->name('my_blog');
 Route::get('/post/{post}/edit', [PostController::class, 'edit'])->name('post.edit');
 Route::delete('/post/{post}', [PostController::class, 'destroy'])->name('post.destroy');
+
+Route::post('/comment/{post}', [CommentController::class, 'store'])->name('comment.store');
