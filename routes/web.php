@@ -40,3 +40,7 @@ Route::get('/post/{post}/edit', [PostController::class, 'edit'])->name('post.edi
 Route::delete('/post/{post}', [PostController::class, 'destroy'])->name('post.destroy');
 
 Route::post('/comment/{post}', [CommentController::class, 'store'])->name('comment.store');
+Route::get('/comment/{comment}', [CommentController::class, 'edit'])->name('comment.edit');
+Route::patch('/comment/{comment}', [CommentController::class, 'update'])->name('comment.update');
+Route::delete('/comment/{comment}', [CommentController::class, 'destroy'])->name('comment.destroy');
+

@@ -21,7 +21,7 @@
             <!-- Short Description -->
             <div>
                 <label for="short-description">Short Description</label>
-                <input type="text" id="short-description" name="short_description" value="{{ old('short-description') }}">
+                <input type="text" id="short-description" name="short_description" value="{{ old('short_description') }}">
                 <div>
                     {{ $errors->first('short_description') }}
                 </div>

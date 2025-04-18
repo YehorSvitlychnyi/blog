@@ -46,4 +46,7 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public static function findById(string $id){
+        return self::find($id)->name;
+    }
 }

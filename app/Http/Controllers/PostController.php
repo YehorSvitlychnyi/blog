@@ -106,6 +106,17 @@ class PostController extends Controller
     {
         $likes = Rating::getLikes($post->id);
         $dislikes = Rating::getDislikes($post->id);
+        $status = Rating::getStatus($post->id, Auth::id());
+        if ($status === false){
+            $like = null;
+            $dislike = null;
+        }elseif ($status === 0){
+            $like = null;
+            $dislike = 1;
+        }else{
+            $like = 1;
+            $dislike = null;
+        }
         $comments = Comment::all()->where('post_id', '=', $post->id);
         return view('post.show',
             [
@@ -113,6 +124,8 @@ class PostController extends Controller
                 'likes' => $likes,
                 'dislikes' => $dislikes,
                 'comments' => $comments,
+                'like' => $like,
+                'dislike' => $dislike,
             ]);
     }
     public function myBlog()
@@ -152,7 +165,7 @@ class PostController extends Controller
         if ($post->img_link) {
             Storage::disk('public')->delete($post->img_link);
         }
-
+        Comment::deleteAll($id);
         $post->delete();
 
         return redirect()->route('my_blog')->with('success', 'Пост успішно видалено.');
