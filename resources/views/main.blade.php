@@ -4,7 +4,7 @@
             @forelse ($posts as $post)
                 <div>
                     @if($post->img_link)
-                        <img src="{{ asset('storage/' . $post->img_link) }}"
+                        <img src="{{ '/storage/' . $post->img_link }}"
                              alt="">
                     @endif
                     <h2><a href="{{ route('post.show', $post->id) }}" >
