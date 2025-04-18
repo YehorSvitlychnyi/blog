@@ -116,7 +116,6 @@ class PostController extends Controller
     public function myBlog()
     {
         $posts = Post::where('author_id', Auth::id())->latest()->paginate(6);
-//        dd($posts);
         return view('blog', compact('posts'));
     }
 
@@ -125,13 +124,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-//        $categories = Category::all();
-//        $postCategories = $post->categories()->pluck('category_id')->toArray();
-//        return view('post.edit', [
-//            'post' => $post,
-//            'categories' => $categories,
-//            'postCategories' => $postCategories,
-//        ]);
+         //
     }
 
     /**
