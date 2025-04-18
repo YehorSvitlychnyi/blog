@@ -9,6 +9,7 @@ use App\Models\Posts_Categories;
 use App\Models\Rating;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -112,13 +113,25 @@ class PostController extends Controller
                 'dislikes' => $dislikes,
             ]);
     }
+    public function myBlog()
+    {
+        $posts = Post::where('author_id', Auth::id())->latest()->paginate(6);
+//        dd($posts);
+        return view('blog', compact('posts'));
+    }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Post $post)
     {
-        //
+//        $categories = Category::all();
+//        $postCategories = $post->categories()->pluck('category_id')->toArray();
+//        return view('post.edit', [
+//            'post' => $post,
+//            'categories' => $categories,
+//            'postCategories' => $postCategories,
+//        ]);
     }
 
     /**
@@ -134,6 +147,19 @@ class PostController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $post = Post::findOrFail($id);
+        if ($post->author_id !== Auth::id()) {
+            abort(403, 'Ви не маєте прав для видалення цього поста.');
+        }
+
+        $post->categories()->detach();
+
+        if ($post->img_link) {
+            Storage::disk('public')->delete($post->img_link);
+        }
+
+        $post->delete();
+
+        return redirect()->route('my_blog')->with('success', 'Пост успішно видалено.');
     }
 }

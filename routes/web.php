@@ -34,3 +34,7 @@ Route::get('/category/create',[\App\Http\Controllers\CategoryController::class,'
 Route::post('/category',[\App\Http\Controllers\CategoryController::class,'store'])->name('category.store');
 
 Route::get('/post/{post}',[PostController::class,'show'])->name('post.show');
+Route::get('/blog', [PostController::class, 'myBlog'])->middleware('auth')->name('my_blog');
+Route::get('/post/{post}/edit', [PostController::class, 'edit'])->name('post.edit');
+//Route::put('/post/{post}', [PostController::class, 'update'])->name('post.update');
+Route::delete('/post/{post}', [PostController::class, 'destroy'])->name('post.destroy');
