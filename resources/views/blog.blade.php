@@ -12,6 +12,13 @@
                     @if($post->img_link)
                         <img src="{{ asset('storage/' . $post->img_link) }}" alt="{{ $post->name }}" style="max-width: 100%; height: auto; margin-bottom: 10px;">
                     @endif
+                    <div >
+                        {{-- Лайк --}}
+                        <i class="fa-solid fa-thumbs-up"></i>
+                        <span>{{ $post->likes_count }}</span>
+                        <i class="fa-solid fa-thumbs-down"></i>
+                        <span>{{ $post->disLikes_count }}</span>
+                    </div>
                     <h2 style="font-size: 20px; font-weight: bold; margin-bottom: 5px;">
                         <a href="{{ route('post.show', $post->id) }}" style="color: #007bff; text-decoration: none;">
                             {{ $post->name }}

@@ -20,7 +20,11 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::latest()->paginate(6);
-        return view('main', compact('posts'));
+        $posts->map(function ($post) {
+            $post->likes_count = Rating::getLikes($post->id);
+            $post->disLikes_count = Rating::getDislikes($post->id);
+        });
+        return view('main', ['posts' => $posts]);
     }
 
 
@@ -106,6 +110,7 @@ class PostController extends Controller
     {
         $likes = Rating::getLikes($post->id);
         $dislikes = Rating::getDislikes($post->id);
+        $comments = Comment::all()->where('post_id', '=', $post->id)->sortByDesc('created_at');
         $status = Rating::getStatus($post->id, Auth::id());
         if ($status === false){
             $like = null;
@@ -117,7 +122,6 @@ class PostController extends Controller
             $like = 1;
             $dislike = null;
         }
-        $comments = Comment::all()->where('post_id', '=', $post->id);
         return view('post.show',
             [
                 'post' => $post,
@@ -131,7 +135,11 @@ class PostController extends Controller
     public function myBlog()
     {
         $posts = Post::where('author_id', Auth::id())->latest()->paginate(6);
-        return view('blog', compact('posts'));
+        $posts->map(function ($post) {
+            $post->likes_count = Rating::getLikes($post->id);
+            $post->disLikes_count = Rating::getDislikes($post->id);
+        });
+        return view('blog', ['posts' => $posts ]);
     }
 
     /**
