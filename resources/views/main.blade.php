@@ -21,7 +21,9 @@
                     <div >
                         {{-- Лайк --}}
                         <i class="fa-solid fa-thumbs-up"></i>
+                        <span>{{ $post->likes_count }}</span>
                         <i class="fa-solid fa-thumbs-down"></i>
+                        <span>{{ $post->disLikes_count }}</span>
                     </div>
                     <a href="{{ route('post.show', $post->id) }}">
                         Go to article

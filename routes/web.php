@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RatingController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 
@@ -43,4 +44,6 @@ Route::post('/comment/{post}', [CommentController::class, 'store'])->name('comme
 Route::get('/comment/{comment}', [CommentController::class, 'edit'])->name('comment.edit');
 Route::patch('/comment/{comment}', [CommentController::class, 'update'])->name('comment.update');
 Route::delete('/comment/{comment}', [CommentController::class, 'destroy'])->name('comment.destroy');
+
+Route::post('/rating/{post}' , [RatingController::class, 'index'])->name('rating.index');
 
