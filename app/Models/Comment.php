@@ -16,4 +16,7 @@ class Comment extends Model
             $comment->delete();
         }
     }
+    public function post(){
+        return $this->belongsTo(Post::class);
+    }
 }

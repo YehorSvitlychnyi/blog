@@ -29,12 +29,17 @@
                         <p>{{ \App\Models\User::findById($comment->user_id)  }}</p>
                         <p>{{ $comment->name }}</p>
                         <p>{{ $comment->updated_at }}</p>
-                        <a href="{{ route('comment.edit', $comment->id) }}">Edit</a>
-                        <form action="{{ route('comment.destroy', $comment->id) }}" method="post">
-                            @csrf
-                            @method('DELETE')
-                            <input type="submit" value="delete">
-                        </form>
+                        @can('update', $comment)
+                            <a href="{{ route('comment.edit', $comment->id) }}">Edit</a>
+                        @endcan
+                        @can('delete', $comment)
+                            <form action="{{ route('comment.destroy', $comment->id) }}" method="post">
+                                @csrf
+                                @method('DELETE')
+                                <input type="submit" value="delete">
+                            </form>
+                        @endcan
+
                     </div>
                 @empty
                         <p>No comments</p>

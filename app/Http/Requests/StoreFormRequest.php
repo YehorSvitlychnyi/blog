@@ -28,6 +28,7 @@ class StoreFormRequest extends FormRequest
                 'description' => 'required|string|min:20|max:700',
                 'file' => 'required|image|max:2048',
                 'categories' => 'required',
+                'comments' => '',
             ];
         }
         return [
@@ -36,6 +37,7 @@ class StoreFormRequest extends FormRequest
             'description' => 'required|string|min:20|max:700',
             'file' => 'image|max:2048',
             'categories' => 'required',
+            'comments' => '',
         ];
     }
 }

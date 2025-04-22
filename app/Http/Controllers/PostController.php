@@ -149,10 +149,10 @@ class PostController extends Controller
      *
      * @return View
      */
-    public function edit(string $id): View
+    public function edit(Post $post): View
     {
         return view('post.edit', [
-            'post' => \App\Models\Post::with('categories')->findOrFail($id),
+            'post' => $post,
             'categories' => \App\Models\Category::all(),
         ]);
     }
@@ -163,10 +163,12 @@ class PostController extends Controller
      *
      * @return RedirectResponse
      */
-    public function update(StoreFormRequest $request, string $id): RedirectResponse
+    public function update(StoreFormRequest $request, Post $post): RedirectResponse
     {
+//        if($request->user()->cannot('update', $post)){
+//            abort(403);
+//        }
         $data = $request->validated();
-        $post = \App\Models\Post::findOrFail($id);
         $post->name = $data['title'];
         $post->short_description = $data['short_description'];
         $post->description = $data['description'];
@@ -188,9 +190,8 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Post $post)
     {
-        $post = Post::findOrFail($id);
         if ($post->author_id !== Auth::id()) {
             abort(403, 'Ви не маєте прав для видалення цього поста.');
         }
