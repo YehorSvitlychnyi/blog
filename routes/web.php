@@ -38,6 +38,7 @@ Route::post('/category',[\App\Http\Controllers\CategoryController::class,'store'
 Route::get('/post/{post}',[PostController::class,'show'])->name('post.show');
 Route::get('/blog', [PostController::class, 'myBlog'])->middleware('auth')->name('my_blog');
 Route::get('/post/{post}/edit', [PostController::class, 'edit'])->name('post.edit');
+Route::patch('/post/{post}/update', [PostController::class, 'update'])->name('post.update');
 Route::delete('/post/{post}', [PostController::class, 'destroy'])->name('post.destroy');
 
 Route::post('/comment/{post}', [CommentController::class, 'store'])->name('comment.store');
