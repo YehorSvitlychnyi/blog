@@ -21,11 +21,20 @@ class StoreFormRequest extends FormRequest
      */
     public function rules(): array
     {
+        if ($this->isMethod('POST')) {
+            return [
+                'title' => 'required|string|min:5|max:100',
+                'short_description' => 'required|string|min:10|max:200',
+                'description' => 'required|string|min:20|max:700',
+                'file' => 'required|image|max:2048',
+                'categories' => 'required',
+            ];
+        }
         return [
             'title' => 'required|string|min:5|max:100',
             'short_description' => 'required|string|min:10|max:200',
             'description' => 'required|string|min:20|max:700',
-            'file' => 'required|image|max:2048',
+            'file' => 'image|max:2048',
             'categories' => 'required',
         ];
     }
