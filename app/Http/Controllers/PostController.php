@@ -201,9 +201,10 @@ class PostController extends Controller
         if ($post->img_link) {
             Storage::disk('public')->delete($post->img_link);
         }
-        Comment::deleteAll($id);
+        Comment::deleteAll($post->id);
+        Rating::deleteAll($post->id);
         $post->delete();
 
-        return redirect()->route('my_blog')->with('success', 'Пост успішно видалено.');
+        return redirect()->route('my_blog')->with('success', 'Success');
     }
 }
