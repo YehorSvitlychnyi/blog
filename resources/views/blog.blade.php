@@ -1,63 +1,54 @@
 <x-app-layout>
-    <a href="{{ route('post.create') }}" style="display: inline-block; background-color: #4CAF50; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px; margin-bottom: 10px;">
-        Create a new post
-    </a>
     <div>
-        <h1 style="font-size: 24px; font-weight: bold; margin-bottom: 15px;">
-            My blog
-        </h1>
-        <div>
+        <h1 class="blog-title">My blog</h1>
+        <div class="blog-header">
+            <a href="{{ route('post.create') }}" class="btn-create">Create a new post</a>
+        </div>
+        <div class="posts-grid">
             @forelse ($posts as $post)
-                <div style="margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #eee;">
+                <div class="post-card">
+                    <h2 class="post-title"><a href="{{ route('post.show', $post->id) }}">{{ $post->name }}</a></h2>
                     @if($post->img_link)
-                        <img src="{{ asset('storage/' . $post->img_link) }}" alt="{{ $post->name }}" style="max-width: 100%; height: auto; margin-bottom: 10px;">
+                        <img src="{{ asset('storage/' . $post->img_link) }}" alt="{{ $post->name }}" class="post-image">
                     @endif
-                    <div >
-                        {{-- Лайк --}}
-                        <i class="fa-solid fa-thumbs-up"></i>
-                        <span>{{ $post->likes_count }}</span>
-                        <i class="fa-solid fa-thumbs-down"></i>
-                        <span>{{ $post->disLikes_count }}</span>
-                    </div>
-                    <h2 style="font-size: 20px; font-weight: bold; margin-bottom: 5px;">
-                        <a href="{{ route('post.show', $post->id) }}" style="color: #007bff; text-decoration: none;">
-                            {{ $post->name }}
-                        </a>
-                    </h2>
-                    <p style="color: #6c757d; margin-bottom: 8px;">
+                    <div class="post-description">
                         {{ $post->short_description }}
-                    </p>
-                    <p style="color: #6c757d; margin-bottom: 8px;">
-                        <strong>Категорії:</strong>
+                    </div>
+                    <div class="post-categories">
+                        <strong>Categories:</strong>
                         @foreach($post->categories as $category)
                             {{ $loop->first ? '' : ', ' }}
                             {{ ltrim($category->name, '-') }}
                         @endforeach
-                    </p>
-                    <div style="display: flex; gap: 10px; align-items: center;">
-                        <a href="{{ route('post.edit', $post->id) }}" style="display: inline-block; background-color: #ffc107; color: white; padding: 8px 12px; text-decoration: none; border-radius: 5px;">
-                            Edit
-                        </a>
-
-                        <form action="{{ route('post.destroy', $post->id) }}" method="POST" style="display: inline;">
+                    </div>
+                    <div class="post-footer">
+                        <a href="{{ route('post.show', $post->id) }}" class="post-button">Go to article</a>
+                        <a href="{{ route('post.edit', $post->id) }}" class="btn-edit">Edit</a>
+                        <form action="{{ route('post.destroy', $post->id) }}" method="POST" class="delete-form">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" style="background-color: #dc3545; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer;"
-                                    onclick="return confirm('Ви впевнені, що хочете видалити цей пост?')">
+                            <button type="submit" class="btn-delete" onclick="return confirm('Are you sure you want to delete this post?')" >
                                 Delete
                             </button>
                         </form>
+                        <div class="post-reactions">
+                            <div class="reaction">
+                                <i class="fa-solid fa-thumbs-up"></i>
+                                <span>{{ $post->likes_count }}</span>
+                            </div>
+                            <div class="reaction">
+                                <i class="fa-solid fa-thumbs-down"></i>
+                                <span>{{ $post->disLikes_count }}</span>
+                            </div>
+                        </div>
                     </div>
-                    <a href="{{ route('post.show', $post->id) }}" style="display: inline-block; margin-top: 10px; color: #007bff; text-decoration: none;">
-                        Перейти до статті
-                    </a>
                 </div>
             @empty
-                <p style="color: #6c757d;">У вас ще немає жодного поста.</p>
+                <p>No posts available.</p>
             @endforelse
         </div>
-        <div style="margin-top: 24px;">
+    </div>
+        <div class="pagination-links">
             {{ $posts->links() }}
         </div>
-    </div>
 </x-app-layout>

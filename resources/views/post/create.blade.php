@@ -1,97 +1,61 @@
 <x-app-layout>
-    <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
-        <form method="POST" action="{{ route('post.store') }}" enctype="multipart/form-data">
+{{--    <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">--}}
+    <div class="form-container">
+        <form method="POST" action="{{ route('post.store') }}" enctype="multipart/form-data" class="form-box">
             @csrf
             <!-- Title -->
-            <div>
-                <label for="title">Title</label>
-                <input type="text" id="title" name="title" value="{{ old('title') }}">
-                <div>
+            <div class="form-group">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" id="title" name="title" value="{{ old('title') }}" class="form-input">
+                <div class="form-error">
                     {{ $errors->first('title') }}
                 </div>
             </div>
             <!-- File -->
-            <div>
-                <label for="file">Add Image</label>
-                <input type="file" id="file" name="file">
-                <div>
+            <div class="form-group">
+                <label for="file" class="form-label">Add Image</label>
+                <input type="file" id="file" name="file" class="form-input">
+                <div class="form-error">
                     {{ $errors->first('file') }}
                 </div>
             </div>
             <!-- Short Description -->
-            <div>
-                <label for="short-description">Short Description</label>
-                <input type="text" id="short-description" name="short_description" value="{{ old('short_description') }}">
-                <div>
+            <div class="form-group">
+                <label for="short-description" class="form-label">Short Description</label>
+                <textarea id="short-description" name="short_description" class="form-textarea">{{ old('short_description') }}</textarea>
+                <div class="form-error">
                     {{ $errors->first('short_description') }}
                 </div>
             </div>
             <!--Description -->
-            <div>
-                <label for="description">Description</label>
-                <input type="text" id="description" name="description" value="{{ old('description') }}">
-                <div>
+            <div class="form-group">
+                <label for="description" class="form-label">Description</label>
+                <textarea id="description" name="description" class="form-textarea">{{ old('description') }}</textarea>
+                <div class="form-error">
                     {{ $errors->first('description') }}
                 </div>
             </div>
             <!-- Categories -->
-            <div>
-                <label for="categories">Categories</label>
-                <select multiple id="categories" name="categories[]">
+            <div class="form-group">
+                <label for="categories" class="form-label">Categories</label>
+                <select multiple id="categories" name="categories[]" class="form-select">
                     @foreach($categories as $category)
                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                     @endforeach
                 </select>
-                <div>
+                <div class="form-error">
                     {{ $errors->first('categories') }}
                 </div>
             </div>
             <!-- Enabled Comments -->
-            <div>
-                <label for="comments">Comments Enabled?</label>
-                <input type="checkbox" name="comments" value="enable" id="comments" checked>
+            <div class="form-group checkbox-group">
+                <label for="comments" class="form-label">Comments Enabled?</label>
+                <input type="checkbox" name="comments" value="enable" id="comments" checked class="form-checkbox">
             </div>
             <!-- Submit button -->
-            <div>
-                <input type="submit" name="submit" value="Create"/>
+            <div class="form-group">
+                <input type="submit" name="submit" value="Create" class="submit-button"/>
             </div>
-
-
-
-{{--            <!-- Title -->--}}
-{{--            <div>--}}
-{{--                <x-input-label for="title" :value="__('title')" />--}}
-{{--                <x-text-input id="title" class="block mt-1 w-full" type="text" name="title" :value="old('title')" required autofocus autocomplete="title" />--}}
-{{--                <x-input-error :messages="$errors->get('title')" class="mt-2" />--}}
-{{--            </div>--}}
-{{--            <!-- Image -->--}}
-{{--            <div>--}}
-{{--                <x-input-label for="title" :value="__('Name')" />--}}
-{{--                <x-text-input id="title" class="block mt-1 w-full" type="text" name="title" :value="old('title')" required autofocus autocomplete="title" />--}}
-{{--                <x-input-error :messages="$errors->get('title')" class="mt-2" />--}}
-{{--            </div>--}}
-{{--            <!-- Select -->--}}
-{{--            <div>--}}
-{{--                <x-input-label for="categories" :value="__('categories')" />--}}
-{{--                <x-form-select class="block mt-1 w-full" name="interests[]" :options="['Economy','History']" label="Select your interests" multiple />--}}
-{{--                <x-input-error :messages="$errors->get('categories')" class="mt-2" />--}}
-{{--            </div>--}}
-
-{{--            <!-- Short descripion -->--}}
-{{--            <div>--}}
-{{--                <x-input-label for="short-description" :value="__('short-description')" />--}}
-{{--                <x-text-input id="short-description" class="block mt-1 w-full" type="text" name="short-description" :value="old('short-description')" required autofocus autocomplete="short-description" />--}}
-{{--                <x-input-error :messages="$errors->get('short-description')" class="mt-2" />--}}
-{{--            </div>--}}
-{{--            <!-- Descripion -->--}}
-{{--            <div>--}}
-{{--                <x-input-label for="description" :value="__('description')" />--}}
-{{--                <x-text-input id="description" class="block mt-1 w-full" type="text" name="description" :value="old('description')" required autofocus autocomplete="description" />--}}
-{{--                <x-input-error :messages="$errors->get('description')" class="mt-2" />--}}
-{{--            </div>--}}
-{{--            <x-primary-button class="ms-4">--}}
-{{--                {{ __('Create') }}--}}
-{{--            </x-primary-button>--}}
         </form>
     </div>
 </x-app-layout>
